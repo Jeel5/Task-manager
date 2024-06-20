@@ -1,7 +1,7 @@
 const express = require('express');
-const gernalController = require('../controllers/gernalController');
+const gernal = require('../controllers/gernalController');
 const router = express.Router();
 
-router.post('/register', gernalController.insertData);
+router.post('/register', gernal.insertData);
 
 module.exports = router;

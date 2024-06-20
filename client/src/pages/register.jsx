@@ -35,6 +35,7 @@ const Register = () => {
 
     try {
       const response = await axios.post("http://localhost:3100/register", {
+        table: "user",
         username,
         password,
       });
