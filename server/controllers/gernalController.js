@@ -1,8 +1,10 @@
 const db = require("../models");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.insertData = async (req, res) => {
   try {
-    const { table, ...fieldsToInsert } = req.body;
+    const { table, username, password, ...fieldsToInsert } = req.body;
 
     if (!table) {
       return res.status(400).json({ error: "Table name not provided." });
@@ -14,11 +16,20 @@ exports.insertData = async (req, res) => {
       return res.status(404).json({ error: "Table not found." });
     }
 
-    const newRecord = await Model.create(fieldsToInsert);
+    if (table === 'user') {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      fieldsToInsert.password = hashedPassword;
+    }
+
+    const newRecord = await Model.create({ username, password: fieldsToInsert.password, ...fieldsToInsert });
+
+    const token = jwt.sign({ id: newRecord.id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
     res.status(201).json({
       message: `${table} data inserted successfully.`,
       data: newRecord,
+      token,
     });
   } catch (error) {
     console.error("Error inserting data:", error);

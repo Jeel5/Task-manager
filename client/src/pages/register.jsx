@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import img from "../assets/back1.jpg";
 
-const Register = () => {
+const Register = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -39,7 +42,10 @@ const Register = () => {
         username,
         password,
       });
-      console.log("Registration successful:", response.data);
+
+      localStorage.setItem('token', response.data.token);
+      setIsAuthenticated(true);
+      navigate("/main");
     } catch (error) {
       console.error("Registration error:", error);
       alert("Registration failed. Please try again.");
@@ -47,8 +53,16 @@ const Register = () => {
   };
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-[#0A1929]">
-      <div className="relative w-full max-w-md rounded-lg bg-[#10263d] p-6">
+    <div
+      className="flex h-screen w-full items-center justify-center bg-[#0A1929]" 
+      style={{
+        backgroundImage: `url(${img})`, 
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}
+    >
+      <div className="relative w-full max-w-md rounded-lg p-6 bg-opacity-20 bg-white/10 border border-white/30">
         <div className="space-y-6">
           <div className="space-y-2 text-center">
             <h1 className="text-3xl font-bold text-white">Register</h1>
@@ -116,15 +130,21 @@ const Register = () => {
                 className="w-full rounded border border-gray-300 bg-transparent px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring"
               />
             </div>
-            <button type="submit" className="w-full rounded bg-black py-2 text-white">
+            <button
+              type="submit"
+              className="w-full rounded bg-[#14162c] py-2 text-white hover:bg-purple-800 font-semibold transition duration-300 ease-in-out transform hover:scale-105"
+            >
               Sign up
             </button>
           </form>
           <div className="mt-4 text-center text-sm text-white">
             Already have an account?
-            <a href="/login" className="font-medium text-blue-500 underline ml-1">
+            <Link
+              to="/login"
+              className="font-medium text-blue-500 underline ml-1"
+            >
               Sign in
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
+const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, Sequelize) => {
-  const user = sequelize.define("user_master", {
+  const user = sequelize.define('user_masters', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -13,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING,
       allowNull: false,
-    }
+    },
   });
 
   return user;

@@ -20,7 +20,7 @@ db.sequelize.sync({ force: false })
   });
 
 // Routes
-const gernalRoutes = require("./routes/gernal.routes");
+const gernalRoutes = require('./routes/gernal.routes');
 app.use('/', gernalRoutes);
 
 // Start server
