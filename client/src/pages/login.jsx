@@ -37,9 +37,13 @@ const Login = ({ setIsAuthenticated }) => {
         password,
       });
 
-      localStorage.setItem("token", response.data.token);
-      setIsAuthenticated(true);
-      navigate("/main");
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        setIsAuthenticated(true);
+        navigate("/main");
+      } else {
+        alert("Login failed. Please try again.");
+      }
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");

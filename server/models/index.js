@@ -27,7 +27,7 @@ db.sequelize = sequelize;
 
 // Import all models here
 db.user = require("./user.js")(sequelize, Sequelize);
-// db.task = require("./task.js")(sequelize, Sequelize);
+db.task = require("./task.js")(sequelize, Sequelize);
 // db.category = require("./category.js")(sequelize, Sequelize);
 
 // Associate models if associations are defined

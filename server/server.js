@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Database synchronization
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ force: false })   
   .then(() => {
     console.log("Database synced successfully.");
   })
@@ -20,10 +20,13 @@ db.sequelize.sync({ force: false })
   });
 
 // Routes
+console.log("1")
 const gernalRoutes = require('./routes/gernal.routes');
 app.use('/', gernalRoutes);
+const taskRoutes = require('./routes/tasks.routes');
+app.use('/', taskRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`); 
 });

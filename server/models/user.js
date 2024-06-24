@@ -18,5 +18,12 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
+  user.associate = (models) => {
+    user.hasMany(models.task, {
+      foreignKey: "userId",
+      as: "tasks",
+    });
+  };
+
   return user;
 };

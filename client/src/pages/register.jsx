@@ -43,9 +43,13 @@ const Register = ({ setIsAuthenticated }) => {
         password,
       });
 
-      localStorage.setItem('token', response.data.token);
-      setIsAuthenticated(true);
-      navigate("/main");
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        setIsAuthenticated(true);
+        navigate("/main");
+      } else {
+        alert("Registration failed. Please try again.");
+      }
     } catch (error) {
       console.error("Registration error:", error);
       alert("Registration failed. Please try again.");

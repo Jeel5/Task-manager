@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from "./pages/login.jsx";
 import Register from "./pages/register.jsx";
 import Main from "./pages/main.jsx";
+// import TaskBoard from "./pages/tasks.jsx";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -22,9 +23,9 @@ function App() {
           <Route path="*" element={isAuthenticated ? <Navigate to="/main" /> : <Navigate to="/login" />} />
           <Route path="/login" element={isAuthenticated ? <Navigate to ="/main" /> :<Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={isAuthenticated ? <Navigate to="/main" /> : <Register setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/main" element={isAuthenticated ? <Main/> : <Navigate to="/login" />} >
-            <Route path="/task" element={<Task />} />
-          </Route>
+          <Route path="/main" element={isAuthenticated ? <Main/> : <Navigate to="/login" />} />  
+          <Route path='/main' element={<Main />} />     
+          {/* <Route path='/tasks' element={<TaskBoard />} /> */}
         </Routes>
       </Router>
     </>
