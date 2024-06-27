@@ -21,20 +21,25 @@ const createTask = async (req, res) => {
 };
 
 const getTasksByUserId = async (req, res) => {
-  console.log("getooo")
   try {
     const userId = req.userId;
-    const tasks = await task.findAll({ where: { userId } });
+    const tasks = await task.findAll({
+      where: { userId },
+      order: [['createdAt', 'ASC']]
+    });
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+
 const updateTask = async (req, res) => {
+  console.log("yohohooh")
   try {
-    const { id, title, description, startDate, endDate, status, priority } = req.body;
+    const { id, title, description, startDate, endDate, priority } = req.body;
     const userId = req.userId;
+    console.log(req.body)
 
     const existingTask = await task.findOne({ where: { id, userId } });
     if (!existingTask) {
@@ -45,7 +50,6 @@ const updateTask = async (req, res) => {
     existingTask.description = description;
     existingTask.startDate = startDate;
     existingTask.endDate = endDate;
-    existingTask.status = status;
     existingTask.priority = priority;
 
     await existingTask.save();
@@ -55,8 +59,26 @@ const updateTask = async (req, res) => {
   }
 };
 
+const deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    const existingTask = await task.findOne({ where: { id, userId } });
+    if (!existingTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    await existingTask.destroy();
+    res.status(200).json({ message: "Task deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createTask,
   getTasksByUserId,
-  updateTask
+  updateTask,
+  deleteTask
 };

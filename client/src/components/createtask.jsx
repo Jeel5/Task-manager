@@ -33,7 +33,7 @@ const CreateTaskForm = ({ saveTask, task, userId, onCancel }) => {
       userId
     };
 
-    saveTask(newTask);
+    saveTask(task ? { ...newTask, id: task.id } : newTask);
     setTaskName("");
     setStartDate("");
     setEndDate("");
