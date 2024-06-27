@@ -19,9 +19,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="*" element={isAuthenticated ? <Navigate to="/main" /> : <Navigate to="/login" />} />
-          <Route path="/login" element={isAuthenticated ? <Navigate to ="/main" /> :<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/login" element={isAuthenticated ? <Navigate to="/main" /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={isAuthenticated ? <Navigate to="/main" /> : <Register setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/main" element={isAuthenticated ? <Main/> : <Navigate to="/login" />} />    
+          <Route path="/main" element={isAuthenticated ? <Main setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/login" />} />
         </Routes>
       </Router>
     </>
